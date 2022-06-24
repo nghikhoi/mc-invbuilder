@@ -1,6 +1,6 @@
 package me.crazydopefox.mcinvbuilder.core.event;
 
-import me.crazydopefox.mcinvbuilder.core.IDrawHolder;
+import me.crazydopefox.mcinvbuilder.core.draw.DrawHolder;
 
 import java.util.Map;
 
@@ -49,7 +49,7 @@ public class EventSource implements IEventSource {
     }
 
     @Override
-    public <T extends IEvent> void notifyObservers(IDrawHolder holder, T event) {
+    public <T extends IEvent> void notifyObservers(DrawHolder<?> holder, T event) {
         observers.forEach((clazz, observers) -> {
             if (clazz.isInstance(event)) {
                 for (IEventObserver observer : observers) {

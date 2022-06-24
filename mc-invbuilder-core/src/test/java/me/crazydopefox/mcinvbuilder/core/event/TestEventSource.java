@@ -1,6 +1,5 @@
 package me.crazydopefox.mcinvbuilder.core.event;
 
-import me.crazydopefox.mcinvbuilder.core.IDrawHolder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
