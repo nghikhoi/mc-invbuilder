@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class PointerDrawPanel<T> extends IDrawPanel<T> {
+public class PointerDrawPanel<T extends IDrawable<?>> extends IDrawPanel<T> {
 
     private final IDrawPanel<T> panel;
 
@@ -39,7 +39,7 @@ public class PointerDrawPanel<T> extends IDrawPanel<T> {
         return new PointerDrawSession<>(this);
     }
 
-    static class PointerDrawSession<T> extends DrawSession<T> {
+    static class PointerDrawSession<T extends IDrawable<?>> extends DrawSession<T> {
         private final PointerDrawPanel<T> drawPanel;
         private final List<Consumer<DrawSession<T>>> actions = new LinkedList<>();
 

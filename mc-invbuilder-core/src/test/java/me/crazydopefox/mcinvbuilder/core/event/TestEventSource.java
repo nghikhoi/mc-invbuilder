@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 public class TestEventSource {
 
-    class AEvent implements IEvent {
+    class AEvent implements Event {
     }
 
-    class BEvent implements IEvent {
+    class BEvent implements Event {
     }
 
     @Test
@@ -21,7 +21,7 @@ public class TestEventSource {
         source.addObserver(BEvent.class, (holder, event) -> {
             fired[1] = true;
         });
-        source.addObserver(IEvent.class, (holder, event) -> {
+        source.addObserver(Event.class, (holder, event) -> {
             fired[2] = true;
         });
         source.notifyObservers(null, new AEvent());

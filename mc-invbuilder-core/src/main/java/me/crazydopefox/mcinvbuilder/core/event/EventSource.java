@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class EventSource implements IEventSource {
 
-    private Map<Class<? extends IEvent>, IEventObserver<? extends IEvent>[]> observers;
+    private Map<Class<? extends Event>, IEventObserver<? extends Event>[]> observers;
 
     @Override
-    public <T extends IEvent> void addObserver(Class<T> clazz, IEventObserver<? super T> observer) {
+    public <T extends Event> void addObserver(Class<T> clazz, IEventObserver<? super T> observer) {
         assert clazz != null;
         assert observer != null;
 
@@ -27,7 +27,7 @@ public class EventSource implements IEventSource {
     }
 
     @Override
-    public <T extends IEvent> void removeObserver(Class<T> clazz, IEventObserver<? super T> observer) {
+    public <T extends Event> void removeObserver(Class<T> clazz, IEventObserver<? super T> observer) {
         IEventObserver<?>[] observersForClass = observers.get(clazz);
         if (observersForClass == null) {
             return;
@@ -49,7 +49,7 @@ public class EventSource implements IEventSource {
     }
 
     @Override
-    public <T extends IEvent> void notifyObservers(DrawHolder<?> holder, T event) {
+    public <T extends Event> void notifyObservers(DrawHolder<?> holder, T event) {
         observers.forEach((clazz, observers) -> {
             if (clazz.isInstance(event)) {
                 for (IEventObserver observer : observers) {

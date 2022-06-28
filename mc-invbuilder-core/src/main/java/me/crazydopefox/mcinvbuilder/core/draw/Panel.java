@@ -6,7 +6,7 @@ public abstract class Panel<T> extends Drawable<T> implements IPanel<T> {
 
     protected List<IDrawable<T>> children;
 
-    public Panel(List<IDrawable<T>> children) {
+    protected Panel(List<IDrawable<T>> children) {
         this.children = children;
     }
 
@@ -18,7 +18,7 @@ public abstract class Panel<T> extends Drawable<T> implements IPanel<T> {
     protected abstract void detachChildren();
 
     @Override
-    public void attach(IDrawPanel<T> panel) {
+    public void attach(IDrawPanel<? extends IDrawable<T>> panel) {
         super.attach(panel);
         attachChildren();
     }

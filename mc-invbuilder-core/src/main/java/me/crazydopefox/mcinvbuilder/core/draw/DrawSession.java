@@ -2,7 +2,7 @@ package me.crazydopefox.mcinvbuilder.core.draw;
 
 import lombok.Getter;
 
-public abstract class DrawSession<T> {
+public abstract class DrawSession<T extends IDrawable<?>> {
 
     @Getter protected IDrawPanel<T> drawPanel;
 

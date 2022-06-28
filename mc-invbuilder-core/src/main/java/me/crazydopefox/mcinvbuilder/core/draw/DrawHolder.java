@@ -9,10 +9,10 @@ public class DrawHolder<T> {
     @Getter
     private final IDrawable<T> drawable;
     @Getter
-    private final IDrawPanel<T> drawPanel;
+    private final IDrawPanel<? extends IDrawable<T>> drawPanel;
 
     public void build() {
-        drawable.draw(new DrawContext(), drawPanel);
+        drawable.draw(new DrawContext());
     }
 
 }

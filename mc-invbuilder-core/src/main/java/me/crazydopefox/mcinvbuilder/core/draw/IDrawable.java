@@ -4,7 +4,7 @@ public interface IDrawable<T> {
 
     DrawResult draw(DrawContext context);
 
-    void attach(IDrawPanel<T> panel);
+    void attach(IDrawPanel<? extends IDrawable<T>> panel);
 
     void detach();
 

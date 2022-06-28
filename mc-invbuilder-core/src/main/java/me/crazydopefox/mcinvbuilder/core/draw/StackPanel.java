@@ -30,6 +30,11 @@ public class StackPanel<T> extends Panel<T> {
     }
 
     @Override
+    public void addChild(IDrawable<T> child) {
+        super.addChild(child);
+    }
+
+    @Override
     public DrawResult draw(DrawContext context) {
         int maxHeight = 0;
         int maxWidth = 0;
@@ -37,7 +42,7 @@ public class StackPanel<T> extends Panel<T> {
         int startX = 0;
         int startY = 0;
 
-        PointerDrawPanel<T> pointerPanel = new PointerDrawPanel<>(drawPanel);
+        PointerDrawPanel<?> pointerPanel = new PointerDrawPanel<>(drawPanel);
         for (int i = 0; i < getChildren().size(); i++) {
             pointerPanel.setStartX(startX);
             pointerPanel.setStartY(startY);
