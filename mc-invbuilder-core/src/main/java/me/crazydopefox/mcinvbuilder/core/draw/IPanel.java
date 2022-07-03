@@ -2,10 +2,10 @@ package me.crazydopefox.mcinvbuilder.core.draw;
 
 import java.util.List;
 
-public interface IPanel<T> extends IDrawable<T> {
+public interface IPanel<T> extends IWidget<T> {
 
-    void addChild(IDrawable<T> child);
+    void addChild(IWidget<T> child);
 
-    List<IDrawable<T>> getChildren();
+    List<IWidget<T>> getChildren();
 
 }

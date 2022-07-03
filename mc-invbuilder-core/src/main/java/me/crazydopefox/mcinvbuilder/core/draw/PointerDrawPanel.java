@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class PointerDrawPanel<T extends IDrawable<?>> extends IDrawPanel<T> {
+public class PointerDrawPanel<T> extends IDrawPanel<T> {
 
     private final IDrawPanel<T> panel;
 
@@ -39,7 +39,8 @@ public class PointerDrawPanel<T extends IDrawable<?>> extends IDrawPanel<T> {
         return new PointerDrawSession<>(this);
     }
 
-    static class PointerDrawSession<T extends IDrawable<?>> extends DrawSession<T> {
+    static class PointerDrawSession<T> extends DrawSession<T> {
+
         private final PointerDrawPanel<T> drawPanel;
         private final List<Consumer<DrawSession<T>>> actions = new LinkedList<>();
 
@@ -48,14 +49,21 @@ public class PointerDrawPanel<T extends IDrawable<?>> extends IDrawPanel<T> {
             this.drawPanel = drawPanel;
         }
 
-        @Override
-        public DrawSession<T> draw(int x, int y, T value) {
-            actions.add(session -> session.draw(x, y, value));
-            return this;
+        public <W extends WidgetObject<T>> void doDraw(int x, int y, W value) {
+            actions.add(session -> session.draw(x + drawPanel.getStartX(), y + drawPanel.getStartY(), value));
+        }
+
+        public void doClean() {
+            actions.add(DrawSession::clean);
+        }
+
+        public void doClean(int x, int y) {
+            actions.add(session -> session.clean(x, y));
         }
 
         @Override
         public void apply() {
+            super.apply();
             DrawSession<T> session = drawPanel.panel.startDrawSession();
             actions.forEach(action -> action.accept(session));
             session.apply();

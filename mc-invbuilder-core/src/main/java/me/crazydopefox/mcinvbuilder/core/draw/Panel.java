@@ -2,11 +2,11 @@ package me.crazydopefox.mcinvbuilder.core.draw;
 
 import java.util.List;
 
-public abstract class Panel<T> extends Drawable<T> implements IPanel<T> {
+public abstract class Panel<T> extends Widget<T> implements IPanel<T> {
 
-    protected List<IDrawable<T>> children;
+    protected List<IWidget<T>> children;
 
-    protected Panel(List<IDrawable<T>> children) {
+    protected Panel(List<IWidget<T>> children) {
         this.children = children;
     }
 
@@ -18,8 +18,8 @@ public abstract class Panel<T> extends Drawable<T> implements IPanel<T> {
     protected abstract void detachChildren();
 
     @Override
-    public void attach(IDrawPanel<? extends IDrawable<T>> panel) {
-        super.attach(panel);
+    public void attach(DrawHolder<T> holder, IDrawPanel<T> panel) {
+        super.attach(holder, panel);
         attachChildren();
     }
 
@@ -30,12 +30,12 @@ public abstract class Panel<T> extends Drawable<T> implements IPanel<T> {
     }
 
     @Override
-    public void addChild(IDrawable<T> child) {
+    public void addChild(IWidget<T> child) {
         children.add(child);
     }
 
     @Override
-    public List<IDrawable<T>> getChildren() {
+    public List<IWidget<T>> getChildren() {
         return children;
     }
 

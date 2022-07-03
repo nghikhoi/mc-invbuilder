@@ -7,12 +7,12 @@ import lombok.Getter;
 public class DrawHolder<T> {
 
     @Getter
-    private final IDrawable<T> drawable;
+    private final IWidget<T> drawable;
     @Getter
-    private final IDrawPanel<? extends IDrawable<T>> drawPanel;
+    private final IDrawPanel<T> drawPanel;
 
     public void build() {
-        drawable.draw(new DrawContext());
+        drawable.attach(this, drawPanel);
     }
 
 }

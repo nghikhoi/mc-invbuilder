@@ -1,6 +1,6 @@
 package me.crazydopefox.mcinvbuilder.core.draw;
 
-public abstract class IDrawPanel<T extends IDrawable<?>> {
+public abstract class IDrawPanel<T> {
 
     public abstract int getHeight();
 

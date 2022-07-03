@@ -1,19 +1,16 @@
 package me.crazydopefox.mcinvbuilder.core.draw;
 
+import me.crazydopefox.mcinvbuilder.core.draw.components.StackPanel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class TestDraw {
 
-    static class TestDrawPanel implements IDrawPanel<Integer> {
+    static class TestDrawPanel extends IDrawPanel<Integer> {
 
         private final int height, width;
         private final int[][] data;
-
-        public int[][] getData() {
-            return data;
-        }
 
         TestDrawPanel(int height, int width) {
             this.height = height;
@@ -31,9 +28,32 @@ public class TestDraw {
             return width;
         }
 
+        public int[][] getData() {
+            return data;
+        }
+
         @Override
-        public void draw(int x, int y, Integer c) {
-            data[x][y] = c;
+        public DrawSession<Integer> startDrawSession() {
+            return new DrawSession<>(this) {
+                @Override
+                protected <W extends WidgetObject<Integer>> void doDraw(int x, int y, W value) {
+                    data[x][y] = value.getValue();
+                }
+
+                @Override
+                protected void doClean() {
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            data[x][y] = 0;
+                        }
+                    }
+                }
+
+                @Override
+                protected void doClean(int x, int y) {
+                    data[x][y] = 0;
+                }
+            };
         }
 
     }
@@ -51,7 +71,7 @@ public class TestDraw {
     void testDrawableObject() {
         TestDrawFactory factory = new TestDrawFactory();
 
-        DrawableObject<Integer> object = new DrawableObject<>();
+        WidgetObject<Integer> object = new WidgetObject<>();
         object.setValue(1);
         DrawHolder<Integer> holder = factory.createDrawHolder(object, 1, 1);
         holder.build();
@@ -62,25 +82,33 @@ public class TestDraw {
     void testStackPanel() {
         TestDrawFactory factory = new TestDrawFactory();
 
-        DrawableObject<Integer> object = new DrawableObject<>();
+        WidgetObject<Integer> object = new WidgetObject<>();
         object.setValue(1);
         StackPanel<Integer> panel1 = new StackPanel<>(Orientation.HORIZONTAL);
         panel1.addChild(object);
         panel1.addChild(object);
 
-        DrawableObject<Integer> object2 = new DrawableObject<>();
+        WidgetObject<Integer> object2 = new WidgetObject<>();
         object2.setValue(2);
         StackPanel<Integer> panel2 = new StackPanel<>(Orientation.VERTICAL);
-        panel2.addChild(object2);
+
+        StackPanel<Integer> panel3 = new StackPanel<>(Orientation.HORIZONTAL);
+        panel3.addChild(object2);
+
+        panel2.addChild(panel3);
         panel2.addChild(object2);
 
         StackPanel<Integer> panel = new StackPanel<>(Orientation.VERTICAL);
-        panel.addChild(panel1);
-        panel.addChild(panel2);
 
         DrawHolder<Integer> holder = factory.createDrawHolder(panel, 3, 2);
         holder.build();
+
+        panel.addChild(panel1);
+        panel.addChild(panel2);
         assertArrayEquals(new int[][] {{1, 1}, {2, 0}, {2, 0}}, ((TestDrawPanel) holder.getDrawPanel()).getData());
+
+        panel3.addChild(object2);
+        assertArrayEquals(new int[][] {{1, 1}, {2, 2}, {2, 0}}, ((TestDrawPanel) holder.getDrawPanel()).getData());
     }
 
 }
