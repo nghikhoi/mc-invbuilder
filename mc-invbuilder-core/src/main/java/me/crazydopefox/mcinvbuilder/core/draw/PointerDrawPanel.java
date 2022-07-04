@@ -26,12 +26,12 @@ public class PointerDrawPanel<T> extends IDrawPanel<T> {
 
     @Override
     public int getHeight() {
-        return endY - startY;
+        return endY - startY + 1;
     }
 
     @Override
     public int getWidth() {
-        return endX - startX;
+        return endX - startX + 1;
     }
 
     @Override
