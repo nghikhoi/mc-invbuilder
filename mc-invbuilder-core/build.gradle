@@ -2,12 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'me.crazydopefox'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'

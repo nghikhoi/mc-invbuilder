@@ -1,4 +1,5 @@
-
 rootProject.name = 'mc-invbuilder'
+
 include 'mc-invbuilder-core'
+include 'mc-invbuilder-bukkit'
 
