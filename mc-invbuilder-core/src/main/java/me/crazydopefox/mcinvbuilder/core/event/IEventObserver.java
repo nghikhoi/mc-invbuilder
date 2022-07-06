@@ -6,4 +6,8 @@ public interface IEventObserver<E extends Event> {
 
     void onEvent(DrawHolder<?> holder, E event);
 
+    void shutdown();
+
+    boolean isShutdown();
+
 }

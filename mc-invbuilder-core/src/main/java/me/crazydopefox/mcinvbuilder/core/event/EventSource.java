@@ -53,8 +53,8 @@ public class EventSource implements IEventSource {
         observers.forEach((clazz, observers) -> {
             if (clazz.isInstance(event)) {
                 for (IEventObserver observer : observers) {
-                    observer.onEvent(holder, event);
-                }
+                    if (!observer.isShutdown()) observer.onEvent(holder, event);
+                }  //TODO: change to linkedlist
             }
         });
     }

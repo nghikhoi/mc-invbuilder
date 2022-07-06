@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor
-public class DrawHolder<T> {
+public abstract class DrawHolder<T> {
 
     @Getter
     private final IWidget<T> drawable;
-    @Getter
-    private final IDrawPanel<T> drawPanel;
+
+    public abstract IDrawPanel<T> getDrawPanel();
 
     private final Map<String, Object> contextMap = new HashMap<>();
 
@@ -25,7 +25,7 @@ public class DrawHolder<T> {
     }
 
     public void build() {
-        drawable.attach(this, drawPanel);
+        drawable.attach(this, getDrawPanel());
     }
 
 }
